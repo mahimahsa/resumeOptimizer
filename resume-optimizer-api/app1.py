@@ -22,7 +22,7 @@ skill_graph = {
 }
 
 # Initialize Hugging Face Inference Client
-hf_token = ""  # replace with your actual key
+hf_token = null  # replace with your actual key
 client = InferenceClient(token=hf_token)
 
 # Extract known skills using simple keyword match
