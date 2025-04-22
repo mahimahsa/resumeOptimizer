@@ -1,0 +1,11 @@
+input_skills,suggested_skills
+Java,Spring Boot
+"Java,Spring Boot",JSF
+"Java,Spring Boot,JSF",JSP
+JavaScript,React.js
+"JavaScript,React.js",Redux
+"JavaScript,React.js,Redux",Node.js
+Python,Flask
+"Python,Flask",Django
+"Python,Flask,Django",Pandas
+React.js,Redux
