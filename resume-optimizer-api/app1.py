@@ -21,7 +21,9 @@ skill_graph = {
     "React.js": ["Redux"]
 }
 
-
+# Initialize Hugging Face Inference Client
+hf_token = ""  # replace with your actual key
+client = InferenceClient(token=hf_token)
 
 # Extract known skills using simple keyword match
 def extract_skills(text, skills_list):
@@ -52,7 +54,7 @@ Suggest relevant but missing skills that are:
 Only return a list of suggested skills. No explanation.
 """
 
-   
+    response = client.text_generation(prompt, max_new_tokens=100)
     return response.strip()
 
 @app.route('/extract_skills', methods=['POST'])
