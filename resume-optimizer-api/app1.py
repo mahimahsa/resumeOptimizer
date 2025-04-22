@@ -21,9 +21,9 @@ skill_graph = {
     "React.js": ["Redux"]
 }
 
-# Initialize Hugging Face Inference Client
-hf_token = null  # replace with your actual key
-client = InferenceClient(token=hf_token)
+
+hf_token = ""  
+client = ""
 
 # Extract known skills using simple keyword match
 def extract_skills(text, skills_list):
