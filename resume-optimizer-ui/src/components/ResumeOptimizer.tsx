@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setResume, setJobDescription, analyzeResume } from "../store/resumeSlice";
 import { AppDispatch } from "../store";
 import SuggestedSkillsSelector from "./SuggestedSkillsSelector";
+import RegeneratedResume from "./RegeneratedResume";
 
 
 const ResumeOptimizer = () => {
@@ -72,7 +73,7 @@ const ResumeOptimizer = () => {
       {/*{suggestedSkills.length > 0 && (*/}
           <SuggestedSkillsSelector suggestedSkills={suggestedSkills} />
       {/*)}*/}
-
+      <RegeneratedResume />
     </div>
   );
 };

@@ -73,25 +73,29 @@ def finalize_skills():
     data = request.json
     resume_skills = data.get('resume_skills', [])
     selected_skills = data.get('selected_skills', [])
-    final_skills = list(set(resume_skills + selected_skills))
-    return jsonify({"final_skills": final_skills})
-
-@app.route('/regenerate_resume', methods=['POST'])
-def regenerate_resume():
-    data = request.json
     resume_text = data.get("resume_text", "")
-    new_skills = data.get("selected_skills", [])
 
-    skill_str = ", ".join(new_skills)
+    final_skills = list(set(resume_skills + selected_skills))
+    skill_str = ", ".join(selected_skills)
+
     prompt = f"""
-You are a helpful assistant that improves resumes.
+You are a resume improvement assistant.
+
+Your job is to enhance the following resume by integrating only the skills listed below.
+
+Allowed skills to add: {skill_str}
+
+Important:
+- Do NOT remove or replace any existing content.
+- Keep the original tone and sentence structure.
+- Insert the new skills in appropriate places where they fit logically.
+- Write full sentences — not a skill list.
+- Do NOT generate a new resume from scratch.
 
 Original resume:
 \"\"\"{resume_text}\"\"\"
 
-Add the following missing skills to the resume naturally: {skill_str}.
-Keep the tone and structure consistent. Do not repeat existing content.
-Return only the improved resume.
+Improved resume:
 """
 
     response = client.text_generation(prompt, max_new_tokens=300)
@@ -99,7 +103,10 @@ Return only the improved resume.
     print("\n--- Regenerated Resume ---\n")
     print(improved_resume)
 
-    return jsonify({"regenerated_resume": improved_resume})
+    return jsonify({
+        "final_skills": final_skills,
+        "regenerated_resume": improved_resume
+    })
 
 if __name__ == '__main__':
     app.run(debug=True)

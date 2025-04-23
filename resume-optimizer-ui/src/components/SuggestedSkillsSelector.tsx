@@ -1,9 +1,11 @@
 "use client";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setSelectedSkills } from "../store/resumeSlice";
+import { setSelectedSkills, setRegeneratedResume } from "../store/resumeSlice";
 import { AppDispatch } from "../store";
 import { useState } from "react";
+
+
 
 interface SuggestedSkillsSelectorProps {
     suggestedSkills: string[];
@@ -13,7 +15,7 @@ const SuggestedSkillsSelector = ({ suggestedSkills }: SuggestedSkillsSelectorPro
     const dispatch = useDispatch<AppDispatch>();
     const resumeSkills = useSelector((state: any) => state.resume.resumeSkills);
     const [selected, setSelected] = useState<string[]>([]);
-
+    const resume = useSelector((state: any) => state.resume.resume);
     const toggleSkill = (skill: string) => {
         setSelected((prev) =>
             prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
@@ -23,19 +25,18 @@ const SuggestedSkillsSelector = ({ suggestedSkills }: SuggestedSkillsSelectorPro
     const handleSubmit = async () => {
         dispatch(setSelectedSkills(selected));
         const response = await fetch("http://localhost:5000/finalize_skills", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                resume_skills: resumeSkills,
-                selected_skills: selected,
-            }),
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            resume_skills: resumeSkills,
+            selected_skills: selected,
+            resume_text: resume,
+          }),
         });
-
+      
         const result = await response.json();
-        console.log("Final skills:", result.final_skills);
-    };
+        dispatch(setRegeneratedResume(result.regenerated_resume));
+      };
 
     return (
         <div className="flex flex-col w-full mt-6 p-4 bg-gray-100 rounded-lg">
