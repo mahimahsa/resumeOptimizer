@@ -95,5 +95,4 @@ Open in browser: `http://localhost:3000`
 - MIT License — open for personal and commercial use
 - Powered by:
   - [Hugging Face](https://huggingface.co) for AI inference
-  - [spaCy](https://spacy.io) for NLP
   - [Next.js](https://nextjs.org) and [Redux Toolkit](https://redux-toolkit.js.org)
