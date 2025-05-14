@@ -6,6 +6,7 @@ interface ResumeState {
   jobDescription: string;
   resumeSkills: string[];
   jobSkills: string[];
+  missingSkills : string[];
   suggestedSkills: string[];
   selectedSkills: string[];
   regeneratedResume: string;
@@ -18,6 +19,7 @@ const initialState: ResumeState = {
   jobDescription: "",
   resumeSkills: [],
   jobSkills: [],
+  missingSkills : [],
   suggestedSkills: [],
   selectedSkills: [],
   regeneratedResume: "",
@@ -77,8 +79,10 @@ const resumeSlice = createSlice({
         })
         .addCase(analyzeResume.fulfilled, (state, action) => {
           state.loading = false;
+          state.error = null;
           state.resumeSkills = action.payload.resume_skills;
           state.jobSkills = action.payload.job_skills;
+          state.missingSkills = action.payload.missing_skills;
           state.suggestedSkills = action.payload.suggested_skills;
         })
         .addCase(analyzeResume.rejected, (state, action) => {
